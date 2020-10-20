@@ -2,14 +2,17 @@ import Search from './Search.js';
 import VideoPlayer from './VideoPlayer.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
-import searchYoutube from '../lib/searchYoutube.js';
-import YOUTUBE_API_KEY from './config/youtube.js';
+import searchYouTube from '../lib/searchYouTube.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.getVideos();
     this.state = {
-      current: 0
+      current: 0,
+      videos: exampleVideoData,
+      currentVideos: [],
     };
   }
 
@@ -20,13 +23,22 @@ class App extends React.Component {
   }
 
   getVideos() {
-    let searchResults = [];
-    this.props.searchYoutube({key: YOUTUBE_API_KEY, query: 'corvettes', max: 5}, function(data) {
-      data.forEach(result => {
-        searchResults.push(result);
+    // let searchResults = [];
+    searchYouTube({key: YOUTUBE_API_KEY, query: 'corvettes', max: 5}, (data) => {
+      this.setState({
+        videos: data,
       });
+      // data.forEach(result => {
+      //   searchResults.push(result);
+      // });
     });
-    return searchResults;
+  //onsole.log(searchResults)
+    // return searchResults;
+  }
+
+  componentDidMount() {
+    this.setState({currentVideos: videos});
+    console.log('in componentDidMount: ', this.state.currentVideos);
   }
 
   render() {
@@ -40,10 +52,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5>{<VideoPlayer video={this.props.searchYoutube[this.state.current]}/>}</h5></div>
+            <div><h5>{<VideoPlayer video={this.state.videos[this.state.current]}/>}</h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5> <VideoList videos={this.props.searchYoutube} onClick={(i)=>this.handleClick(i)}/></h5></div>
+            <div><h5> <VideoList videos={this.state.videos} onClick={(i)=>this.handleClick(i)}/></h5></div>
           </div>
         </div>
       </div>
