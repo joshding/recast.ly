@@ -3,6 +3,7 @@ import VideoPlayer from './VideoPlayer.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import searchYoutube from '../lib/searchYoutube.js';
+import YOUTUBE_API_KEY from './config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,15 @@ class App extends React.Component {
     });
   }
 
-
+  getVideos() {
+    let searchResults = [];
+    this.props.searchYoutube({key: YOUTUBE_API_KEY, query: 'corvettes', max: 5}, function(data) {
+      data.forEach(result => {
+        searchResults.push(result);
+      });
+    });
+    return searchResults;
+  }
 
   render() {
 
