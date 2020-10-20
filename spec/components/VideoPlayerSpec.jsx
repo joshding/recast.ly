@@ -39,8 +39,6 @@ describe ('VideoPlayer', function() {
 
   it('should dynamically render a video', function() {
     var cuteCatVideoIFrameElement = findRenderedDOMComponentWithClass(cuteCatVideo, 'embed-responsive-item');
-    console.log(cuteCatVideoIFrameElement);
-    console.log(cuteCatVideo);
     var superCuteCatVideoIFrameElement = findRenderedDOMComponentWithClass(superCuteCatVideo, 'embed-responsive-item');
     var hackReactorVideoIFrameElement = findRenderedDOMComponentWithClass(hackReactorVideo, 'embed-responsive-item');
 

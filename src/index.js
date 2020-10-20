@@ -1,4 +1,9 @@
 
 import App from './components/App.js';
+import searchYoutube from './lib/searchYoutube.js';
+import YOUTUBE_API_KEY from './config/Youtube.js';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+let searchResults = [];
+
+
+ReactDOM.render(<App searchYoutube={searchYoutube}/>, document.getElementById('app'));

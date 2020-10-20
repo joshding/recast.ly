@@ -2,6 +2,7 @@ import Search from './Search.js';
 import VideoPlayer from './VideoPlayer.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
+import searchYoutube from '../lib/searchYoutube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,10 @@ class App extends React.Component {
     });
   }
 
+
+
   render() {
+
     return (
       <div>
         <nav className="navbar">
@@ -27,10 +31,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5>{<VideoPlayer video={exampleVideoData[this.state.current]}/>}</h5></div>
+            <div><h5>{<VideoPlayer video={this.props.searchYoutube[this.state.current]}/>}</h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5> <VideoList videos={exampleVideoData} onClick={(i)=>this.handleClick(i)}/></h5></div>
+            <div><h5> <VideoList videos={this.props.searchYoutube} onClick={(i)=>this.handleClick(i)}/></h5></div>
           </div>
         </div>
       </div>
