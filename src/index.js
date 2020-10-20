@@ -4,4 +4,4 @@ import searchYouTube from './lib/searchYouTube.js';
 import YOUTUBE_API_KEY from './config/Youtube.js';
 
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App searchYouTube={searchYouTube} />, document.getElementById('app'));

@@ -8,12 +8,14 @@ import YOUTUBE_API_KEY from '../config/youtube.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.getVideos();
+
     this.state = {
       current: 0,
       videos: exampleVideoData,
-      currentVideos: [],
+      query: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick(i) {
@@ -22,23 +24,30 @@ class App extends React.Component {
     });
   }
 
-  getVideos() {
-    // let searchResults = [];
-    searchYouTube({key: YOUTUBE_API_KEY, query: 'corvettes', max: 5}, (data) => {
+  getVideos(options, callback) {
+    let defaultCB = (data) => {
       this.setState({
-        videos: data,
+        videos: data || exampleVideoData,
       });
-      // data.forEach(result => {
-      //   searchResults.push(result);
-      // });
+    };
+    callback = callback || defaultCB;
+    this.props.searchYouTube(options, callback);
+  }
+
+  handleChange(event) {
+    console.log('from within handleChange: ', event.target.value);
+    this.setState({
+      query: event.target.value,
     });
-  //onsole.log(searchResults)
-    // return searchResults;
+
+    var options = {key: YOUTUBE_API_KEY, query: this.state.query, max: 5};
+
+    this.getVideos(options);
   }
 
   componentDidMount() {
-    this.setState({currentVideos: videos});
-    console.log('in componentDidMount: ', this.state.currentVideos);
+    this.getVideos(
+      {key: YOUTUBE_API_KEY, query: 'corvettes', max: 5});
   }
 
   render() {
@@ -47,7 +56,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em><Search /></h5></div>
+            <div><h5><em>search</em><Search onChange={(event) => this.handleChange(event)}/></h5></div>
           </div>
         </nav>
         <div className="row">
